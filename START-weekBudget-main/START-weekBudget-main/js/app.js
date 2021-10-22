@@ -34,6 +34,23 @@ class HTML{
             addExpenseForm.reset();
         }, 3000)
     }
+    // displays the expenses from the form into the list
+    addExpenseToList(name , amount) {
+       const expensesList = document.querySelector('#expenses ul');
+
+        // create a LI
+        const li = document.createElement('li');
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        // create a template
+        li.innerHTML = `
+            ${name}
+            <span class="badge badge-primary badge-pill" >$ ${amount}</span>
+        `;
+
+
+        // insert into the html
+        expensesList.appendChild(li);
+    }
 
 }
 
@@ -85,7 +102,8 @@ function eventListeners() {
            html.printMessage('There was an error, all the fields are mandtory',
            'alert-danger');
        } else {
-           console.log('correct');
+           // add expenses to the list
+           html.addExpenseToList(expenseName, amount);
        }
     });
 
