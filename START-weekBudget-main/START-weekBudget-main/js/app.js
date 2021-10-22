@@ -16,6 +16,25 @@ class HTML{
       budgetTotal.innerHTML = `${amount}`;
       budgetLeft.innerHTML = `${amount}`;
     }
+
+    // displays a message(correct  ot invalid)
+    printMessage(message, className) {
+        const messageWrapper = document.createElement('div');
+        // add three different classes into the div
+        messageWrapper.classList.add('text-center', 'alert', className);
+        messageWrapper.appendChild(document.createTextNode(message));
+
+        // insert into html
+        document.querySelector('.primary').insertBefore(messageWrapper, addExpenseForm );
+
+        // clear the error
+        setTimeout(function(){
+            document.querySelector('.primary .alert').remove();
+            //erases the content of the expense amount and name
+            addExpenseForm.reset();
+        }, 3000)
+    }
+
 }
 
 
@@ -57,9 +76,17 @@ function eventListeners() {
 
     // when a new expense is added
     addExpenseForm.addEventListener('submit', function(e) {
+        e.preventDefault();
        // read the input values
-       const expenseName = documen.querySelector('#expense').value;
+       const expenseName = document.querySelector('#expense').value;
        const amount = document.querySelector('#amount').value;
+
+       if(expenseName === '' || amount === '' ){
+           html.printMessage('There was an error, all the fields are mandtory',
+           'alert-danger');
+       } else {
+           console.log('correct');
+       }
     });
 
 }
