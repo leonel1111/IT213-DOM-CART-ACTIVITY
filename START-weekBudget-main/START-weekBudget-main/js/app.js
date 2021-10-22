@@ -5,6 +5,10 @@ class Budget {
         this.budgetLeft = this.budget;
 
     }
+    //sunstracts from the budget
+    substractFromBudget(amount){
+        return this.budgetLeft -= amount;
+    }
 }
 
 // everything related to html
@@ -50,6 +54,22 @@ class HTML{
 
         // insert into the html
         expensesList.appendChild(li);
+    }
+    //substarcts the expense amount from the budget
+    trackbudget(amount) {
+        const budgetLeftDollars = budget.substractFromBudget(amount);
+        budgetLeft.innerHTML = `${budgetLeftDollars}`;
+
+        //check when 50% is spent
+
+        if ( (budget.budget / 4 ) > budgetLeftDollars ){
+            budgetLeft.parentElement.parentElement.classList.remove('alert-success', 'alert-warning');
+            budgetLeft.parentElement.parentElement.classList.add('alert-danger');
+
+        }else if ( (budget.budget / 2 ) > budgetLeftDollars ){
+            budgetLeft.parentElement.parentElement.classList.remove('alert-success');
+            budgetLeft.parentElement.parentElement.classList.add('alert-warning');
+        }
     }
 
 }
@@ -104,6 +124,8 @@ function eventListeners() {
        } else {
            // add expenses to the list
            html.addExpenseToList(expenseName, amount);
+           html.trackbudget(amount);
+           html.printMessage('Added...', 'alert-success');
        }
     });
 
